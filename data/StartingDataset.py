@@ -6,14 +6,15 @@ class StartingDataset(torch.utils.data.Dataset):
     Dataset that contains 100000 3x224x224 black images (all zeros).
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, items, labels):
+        self.items = items
+        self.labels = labels
 
     def __getitem__(self, index):
-        inputs = torch.zeros([3, 224, 224])
-        label = 0
+        item = self.items[index]
+        label = self.labels[index]
 
-        return inputs, label
+        return item, label
 
     def __len__(self):
-        return 10000
+        return len(self.labels)
