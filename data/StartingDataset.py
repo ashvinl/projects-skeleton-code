@@ -3,7 +3,7 @@ import torch
 
 class StartingDataset(torch.utils.data.Dataset):
     """
-    Dataset that contains 100000 3x224x224 black images (all zeros).
+    Dataset .
     """
 
     def __init__(self, items, labels):
