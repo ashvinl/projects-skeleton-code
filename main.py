@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 
 import constants
 from data.StartingDataset import StartingDataset
@@ -16,9 +17,14 @@ def main():
     print("Epochs:", constants.EPOCHS)
     print("Batch size:", constants.BATCH_SIZE)
 
+    leafdata = pd.read_csv("/content/train.csv")
+    leafdata1 = leafdata[:len(leafdata)//2]
+    leafdata2 = leafdata[len(leafdata)//2:]
+
+
     # Initalize dataset and model. Then train the model!
-    train_dataset = StartingDataset()
-    val_dataset = StartingDataset()
+    train_dataset = StartingDataset(leafdata1['image_id'], leafdata1['label'])
+    val_dataset = StartingDataset(leafdata2['image_id'], leafdata2['label'])
     model = StartingNetwork()
     starting_train(
         train_dataset=train_dataset,

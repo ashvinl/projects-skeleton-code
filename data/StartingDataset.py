@@ -6,7 +6,7 @@ class StartingDataset(torch.utils.data.Dataset):
     """
     Dataset .
     """
-    path = '/content/train_images'
+    path = '/content/train_images/'
     transform = transforms.Compose([
         transforms.PILToTensor()
 ])

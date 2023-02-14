@@ -47,9 +47,11 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
         for batch in tqdm(train_loader):
             # TODO: Backpropagation and gradient descent
             images, labels = batch
+            
             images = images.to(device)
             labels = labels.to(device)
             outputs = model(images)
+            print(images.shape, outputs.shape)
             loss = loss_fn(outputs, labels)
 
             loss.backward()
