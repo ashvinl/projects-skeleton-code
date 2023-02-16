@@ -53,6 +53,7 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
             outputs = model(images)
             print(images.shape, outputs.shape)
             loss = loss_fn(outputs, labels)
+            outputs = torch.argmax(outputs)
 
             loss.backward()
             optimizer.step()
@@ -89,7 +90,6 @@ def compute_accuracy(outputs, labels):
     Example output:
         0.75
     """
-
     n_correct = (torch.round(outputs) == labels).sum().item()
     n_total = len(outputs)
     return n_correct / n_total
