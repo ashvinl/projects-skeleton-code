@@ -58,6 +58,9 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
             optimizer.step()
             optimizer.zero_grad()
             # Periodically evaluate our model + log to Tensorboard
+
+            outputs = outputs.argmax(axis=1)
+
             if step % n_eval == 0:
                 # TODO:
                 # Compute training loss and accuracy.
