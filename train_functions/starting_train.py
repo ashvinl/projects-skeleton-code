@@ -53,11 +53,12 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
             outputs = model(images)
             print(images.shape, outputs.shape)
             loss = loss_fn(outputs, labels)
-            outputs = outputs.argmax(axis = 1)
+            
 
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()
+            outputs = outputs.argmax(axis = 1)
             # Periodically evaluate our model + log to Tensorboard
             if step % n_eval == 0:
                 # TODO:
