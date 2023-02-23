@@ -53,10 +53,12 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
             outputs = model(images)
             print(images.shape, outputs.shape)
             loss = loss_fn(outputs, labels)
+            
 
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()
+            outputs = outputs.argmax(axis = 1)
             # Periodically evaluate our model + log to Tensorboard
 
             outputs = outputs.argmax(axis=1)
@@ -67,6 +69,7 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
                 # Log the results to Tensorboard.
                 # above loss above
                 accuracy = compute_accuracy(outputs, labels)
+                print(accuracy)
                 # tf.summary.scalar('accuracy', accuracy, step=epoch)
                 
                 # TODO:
@@ -92,7 +95,6 @@ def compute_accuracy(outputs, labels):
     Example output:
         0.75
     """
-
     n_correct = (torch.round(outputs) == labels).sum().item()
     n_total = len(outputs)
     return n_correct / n_total

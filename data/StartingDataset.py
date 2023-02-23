@@ -22,6 +22,7 @@ class StartingDataset(torch.utils.data.Dataset):
         temp_path = StartingDataset.path + self.items[index]
         image = Image.open(temp_path)
         image_tensor = StartingDataset.transform(image)
+        image_tensor = image_tensor.to(torch.float32)
         return image_tensor, label
 
     def __len__(self):
