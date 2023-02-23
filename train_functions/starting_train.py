@@ -53,7 +53,7 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
             outputs = model(images)
             print(images.shape, outputs.shape)
             loss = loss_fn(outputs, labels)
-            outputs = torch.argmax(outputs)
+            outputs = outputs.argmax(axis = 1)
 
             loss.backward()
             optimizer.step()
@@ -65,6 +65,7 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
                 # Log the results to Tensorboard.
                 # above loss above
                 accuracy = compute_accuracy(outputs, labels)
+                print(accuracy)
                 # tf.summary.scalar('accuracy', accuracy, step=epoch)
                 
                 # TODO:
