@@ -93,6 +93,7 @@ def compute_accuracy(outputs, labels):
     Example output:
         0.75
     """
+    print(outputs.shape(), labels.shape())
     n_correct = (torch.round(outputs) == labels).sum().item()
     n_total = len(outputs)
     return n_correct / n_total
