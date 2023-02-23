@@ -18,7 +18,6 @@ class StartingDataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         item = self.items[index]
         label = self.labels[index]
-        print(item)
 
         temp_path = StartingDataset.path + self.items[index]
         image = Image.open(temp_path)
