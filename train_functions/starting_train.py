@@ -41,17 +41,17 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
     model = model.to(device)
     step = 0
     for epoch in range(epochs):
-        print(f"Epoch {epoch + 1} of {epochs}")
+        print("Epoch {epoch + 1} of {epochs}", end='\r')
 
         # Loop over each batch in the dataset
-        for batch in tqdm(train_loader):
+        for batchx in tqdm(train_loader):
             # TODO: Backpropagation and gradient descent
-            images, labels = batch
+            images, labels = batchx
             
             images = images.to(device)
             labels = labels.to(device)
             outputs = model(images)
-            print(images.shape, outputs.shape)
+
             loss = loss_fn(outputs, labels)
             
 
@@ -60,8 +60,6 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
             optimizer.zero_grad()
             outputs = outputs.argmax(axis = 1)
             # Periodically evaluate our model + log to Tensorboard
-
-            outputs = outputs.argmax(axis=1)
 
             if step % n_eval == 0:
                 # TODO:
@@ -76,9 +74,11 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
                 # Compute validation loss and accuracy.
                 # Log the results to Tensorboard.
                 # Don't forget to turn off gradient calculations!
-                torch.no_grad()
-                evaluate(val_loader, model, loss_fn)
-                torch.grad()
+                with torch.no_grad():
+                    model.eval()
+                    evaluate(val_loader, model, loss_fn)
+                    model.train()
+                
             step += 1
 
         print()
@@ -95,6 +95,7 @@ def compute_accuracy(outputs, labels):
     Example output:
         0.75
     """
+    print(outputs, labels)
     n_correct = (torch.round(outputs) == labels).sum().item()
     n_total = len(outputs)
     return n_correct / n_total
@@ -107,14 +108,19 @@ def evaluate(val_loader, model, loss_fn):
     TODO!
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    model.eval()
+    correct = 0
+    total = 0
     for batch in val_loader:
         images, labels = batch
         images = images.to(device)
         labels = labels.to(device)
         outputs = model(images)
-        acc = compute_accuracy(outputs, labels)
+        predictions = outputs.argmax(axis = 1)
+        #print("shapes:")
+        #print(outputs.shape, labels.shape)
+        #acc = compute_accuracy(predictions, labels)
         # loss??
-        return acc
+        correct += (labels == predictions).int().sum()
+        total += len(predictions)
+    print('Accuracy:', (correct / total).item())
     
