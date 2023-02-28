@@ -12,8 +12,8 @@ class StartingDataset(torch.utils.data.Dataset):
 ])
 
     def __init__(self, items, labels):
-        self.items = items
-        self.labels = labels
+        self.items = items.to_numpy()
+        self.labels = labels.to_numpy()
 
     def __getitem__(self, index):
         item = self.items[index]

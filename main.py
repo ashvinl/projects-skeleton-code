@@ -18,8 +18,8 @@ def main():
     print("Batch size:", constants.BATCH_SIZE)
 
     leafdata = pd.read_csv("/content/train.csv")
-    leafdata1 = leafdata[:len(leafdata)//2]
-    leafdata2 = leafdata[len(leafdata)//2:]
+    leafdata1 = leafdata[:len(leafdata)-64]
+    leafdata2 = leafdata[len(leafdata)-64:]
 
 
     # Initalize dataset and model. Then train the model!
