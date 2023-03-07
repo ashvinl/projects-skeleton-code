@@ -74,10 +74,11 @@ def starting_train(train_dataset, val_dataset, model, hyperparameters, n_eval):
                 # Compute validation loss and accuracy.
                 # Log the results to Tensorboard.
                 # Don't forget to turn off gradient calculations!
-                with torch.no_grad():
-                    model.eval()
-                    evaluate(val_loader, model, loss_fn)
-                    model.train()
+                
+                # with torch.no_grad():
+                #     model.eval()
+                #     evaluate(val_loader, model, loss_fn)
+                #     model.train()
                 
             step += 1
 
